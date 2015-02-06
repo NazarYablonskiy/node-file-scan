@@ -3,14 +3,18 @@ var async = require('async');
 var filesStorage = [];
 
 var getFileInfo = function(filename) {
-    var stats = fs.statSync(filename);
-    if (stats.isDirectory()) {
-        readDir(filename);
-    } else if (stats.isFile() && !!stats.size) {
-        filesStorage.push({
-            "name": filename,
-            "size": stats.size
-        });
+    try {
+        var stats = fs.statSync(filename);
+        if (stats.isDirectory()) {
+            readDir(filename);
+        } else if (stats.isFile() && !!stats.size) {
+            filesStorage.push({
+                "name": filename,
+                "size": stats.size
+            });
+        }
+    } catch(err){
+    	continue;
     }
 }
 
@@ -22,8 +26,8 @@ var readDir = function(path) {
 }
 
 var main = function() {
-    var path = __dirname + '/files';
-    // var path = '/home/nazar/Desktop/';
+    // var path = __dirname + '/files';
+    var path = '/home';
     readDir(path);
 }
 
