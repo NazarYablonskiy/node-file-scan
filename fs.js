@@ -13,8 +13,8 @@ var getFileInfo = function(filename) {
                 "size": stats.size
             });
         }
-    } catch(err){
-    	//ignor all fs errs
+    } catch (err) {
+        //ignor all fs errs
     }
 }
 
@@ -25,13 +25,13 @@ var readDir = function(path) {
     });
 }
 
-var sortBySize = function(){
-	
+var sortBySize = function() {
+
 }
 
 var main = function() {
-    var path = __dirname + '/files';
-    // var path = '/home';
+    // var path = __dirname + '/files';
+    var path = '/home';
 
     readDir(path);
 
