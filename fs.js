@@ -14,7 +14,7 @@ var getFileInfo = function(filename) {
             });
         }
     } catch(err){
-    	continue;
+    	//ignor all fs errs
     }
 }
 
@@ -25,10 +25,16 @@ var readDir = function(path) {
     });
 }
 
+var sortBySize = function(){
+	
+}
+
 var main = function() {
-    // var path = __dirname + '/files';
-    var path = '/home';
+    var path = __dirname + '/files';
+    // var path = '/home';
+
     readDir(path);
+
 }
 
 main();
