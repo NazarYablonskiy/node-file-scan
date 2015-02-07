@@ -1,6 +1,5 @@
 var fs = require('fs');
-var async = require('async');
-var filesStorage = [];
+var fileStorage = [];
 
 var getFileInfo = function(filename) {
     try {
@@ -8,7 +7,7 @@ var getFileInfo = function(filename) {
         if (stats.isDirectory()) {
             readDir(filename);
         } else if (stats.isFile() && !!stats.size) {
-            filesStorage.push({
+            fileStorage.push({
                 "name": filename,
                 "size": stats.size
             });
@@ -26,17 +25,37 @@ var readDir = function(path) {
 }
 
 var sortBySize = function() {
+    fileStorage.sort(function(a, b) {
+        return a.size - b.size;
+    });
+}
 
+var groupBySize = function() {
+	fileStorage.push({size: 0}); //страхвка =)
+    var groupedFiles = [];
+    var buff = [];
+    fileStorage.forEach(function(file) {
+        if (buff.length == 0) {
+            buff.push(file);
+        } else if (buff[buff.length - 1].size == file.size) {
+            buff.push(file);
+        } else if (buff.length >= 2) {
+            groupedFiles.push(buff);
+            buff = [];
+            buff.push(file);
+        } else {
+            buff = [];
+            buff.push(file);
+        }
+    });
+    fileStorage = groupedFiles;
 }
 
 var main = function() {
-    // var path = __dirname + '/files';
-    var path = '/home';
-
+    var path = __dirname + '/files';
+    // var path = '/home/nazar/Apps';
     readDir(path);
-
-}
-
-main();
-
-console.log(filesStorage);
+    sortBySize();
+    groupBySize();
+    console.log(fileStorage);
+}(); // run
