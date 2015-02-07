@@ -9,7 +9,5 @@
     "author": "Nazar Yablonskiy",
     "license": "ISC",
     "dependencies": {
-        "mongoose": "",
-        "async": ""
     }
 }
