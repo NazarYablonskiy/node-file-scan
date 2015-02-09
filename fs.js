@@ -110,7 +110,7 @@ var compareBigFilesFunc = function(file_1, file_2) {
                 break;
             }
         }
-        result = compareBigFilesIteration(stream1, stream2, file_1.size - BUFFER_SIZE);
+        if(result) result = compareBigFilesIteration(stream1, stream2, file_1.size - BUFFER_SIZE);
     } catch (err) {
 
     }
