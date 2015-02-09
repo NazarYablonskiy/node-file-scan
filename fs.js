@@ -1,5 +1,6 @@
 var fs = require('fs');
 var fileStorage = [];
+var BUFFER_SIZE = 1024;
 
 var getFileInfo = function(filename) {
     var file;
@@ -64,10 +65,10 @@ var groupBySize = function(files) {
 var checkFileGroups = function(filesArr) {
     var comparedFiles = [];
     filesArr.forEach(function(files) { //file is big if file size > 1024 Bytes
-        if (files[0].size <= 10240) {
-            comparedFiles[comparedFiles.length] = compareFiles(files, readFiles, compareByBuffers);
+        if (files[0].size < BUFFER_SIZE) {
+            comparedFiles[comparedFiles.length] = compareFiles(files, readFiles, compareFilesFunc);
         } else {
-            // comparedFiles[comparedFiles.length] = compareBigFiles(files) || undefined;
+            comparedFiles[comparedFiles.length] = compareFiles(files, readBigFiles, compareBigFilesFunc);
         }
     });
     return comparedFiles;
@@ -75,25 +76,9 @@ var checkFileGroups = function(filesArr) {
 
 var compareFiles = function(files, readFunc, compareFunc) {
     var readedFiles = readFunc(files);
-    var comparedFiles = compareFunc(readedFiles, compareFilesFunc);
+    var comparedFiles = compareByBuffers(readedFiles, compareFunc);
     var filenames = getNames(comparedFiles);
     return filenames;
-}
-
-var readBigFiles = function(files) {
-    // var readedFiles = [];
-    // files.forEach(function(file) {
-    //     readedFiles.push(readFilePart(file.name));
-    // });
-    // return readedFiles;
-}
-
-var compareFilesFunc = function(file_1, file_2) {
-    return file_1.buffer == file_2.buffer;
-}
-
-var compareBigFilesFunc = function(file_1, file_2) {
-    return file_1.buffer == file_2.buffer;
 }
 
 var readFiles = function(files) {
@@ -101,6 +86,51 @@ var readFiles = function(files) {
         files[file].buffer = fs.readFileSync(files[file].name).toString();
     };
     return files;
+}
+
+var readBigFiles = function(files) {
+    return files;
+}
+
+var compareFilesFunc = function(file_1, file_2) {
+    return file_1.buffer == file_2.buffer;
+}
+
+var compareBigFilesFunc = function(file_1, file_2) {
+    var result = false;
+    try {
+        var stream1 = fs.openSync(file_1.name, 'r');
+        var stream2 = fs.openSync(file_2.name, 'r');
+        var pos;
+        for (pos = 0; pos + BUFFER_SIZE < file_1.size; pos += BUFFER_SIZE) {
+            if (compareBigFilesIteration(stream1, stream2, pos)) {
+                result = true;
+            } else {
+                result = false;
+                break;
+            }
+        }
+        result = compareBigFilesIteration(stream1, stream2, file_1.size - BUFFER_SIZE);
+    } catch (err) {
+
+    }
+
+    //read buffers from stream and compare it for equality in loop
+    return result;
+}
+
+var compareBigFilesIteration = function(stream1, stream2, pos) {
+    var result = false;
+    var buffer1 = new Buffer(BUFFER_SIZE);
+    var buffer2 = new Buffer(BUFFER_SIZE);
+    fs.readSync(stream1, buffer1, 0, BUFFER_SIZE, pos);
+    fs.readSync(stream2, buffer2, 0, BUFFER_SIZE, pos);
+    if (buffer1.toString() === buffer2.toString()) {
+        result = true;
+    } else {
+        result = false;
+    }
+    return result;
 }
 
 var compareByBuffers = function(files, compareFunc) {
@@ -145,8 +175,7 @@ var getNames = function(filesArrs) { //gets 2x array
 }
 
 var main = function() {
-    var path = __dirname + '/files';
-    // var path = '/home/nazar/Apps';
+    var path = process.argv[2] || __dirname + '/files';
     readDir(path);
     fileStorage = sortBySize(fileStorage);
     fileStorage = groupBySize(fileStorage);

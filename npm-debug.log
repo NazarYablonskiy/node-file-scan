@@ -1,0 +1,421 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'openvg-canvas',
+1 verbose cli   '--save' ]
+2 info using npm@2.5.0
+3 info using node@v0.10.36
+4 verbose node symlink /usr/bin/node
+5 silly cache add args [ 'openvg-canvas', null ]
+6 verbose cache add spec openvg-canvas
+7 silly cache add parsed spec { raw: 'openvg-canvas',
+7 silly cache add   scope: null,
+7 silly cache add   name: 'openvg-canvas',
+7 silly cache add   rawSpec: '',
+7 silly cache add   spec: '*',
+7 silly cache add   type: 'range' }
+8 verbose addNamed openvg-canvas@*
+9 silly addNamed semver.valid null
+10 silly addNamed semver.validRange *
+11 silly addNameRange { name: 'openvg-canvas', range: '*', hasData: false }
+12 silly mapToRegistry name openvg-canvas
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry uri https://registry.npmjs.org/openvg-canvas
+16 verbose addNameRange registry:https://registry.npmjs.org/openvg-canvas not in flight; fetching
+17 verbose get https://registry.npmjs.org/openvg-canvas not expired, no request
+18 silly addNameRange number 2 { name: 'openvg-canvas', range: '*', hasData: true }
+19 silly addNameRange versions [ 'openvg-canvas',
+19 silly addNameRange   [ '0.1.0',
+19 silly addNameRange     '0.1.1',
+19 silly addNameRange     '0.2.0',
+19 silly addNameRange     '1.0.0',
+19 silly addNameRange     '1.1.0',
+19 silly addNameRange     '1.1.1',
+19 silly addNameRange     '1.1.2',
+19 silly addNameRange     '1.1.3',
+19 silly addNameRange     '1.1.4',
+19 silly addNameRange     '1.1.5',
+19 silly addNameRange     '1.1.6',
+19 silly addNameRange     '1.1.7' ] ]
+20 verbose addNamed openvg-canvas@1.1.7
+21 silly addNamed semver.valid 1.1.7
+22 silly addNamed semver.validRange 1.1.7
+23 silly cache afterAdd openvg-canvas@1.1.7
+24 verbose afterAdd /home/nazar/.npm/openvg-canvas/1.1.7/package/package.json not in flight; writing
+25 verbose afterAdd /home/nazar/.npm/openvg-canvas/1.1.7/package/package.json written
+26 silly install resolved [ { name: 'openvg-canvas',
+26 silly install resolved     preferGlobal: 'true',
+26 silly install resolved     version: '1.1.7',
+26 silly install resolved     author:
+26 silly install resolved      { name: 'Luis Reis',
+26 silly install resolved        email: 'luis@luismreis.com',
+26 silly install resolved        url: 'http://luismreis.com/' },
+26 silly install resolved     description: 'Canvas on node-openvg',
+26 silly install resolved     bin: { 'node-canvas': './bin/node-canvas' },
+26 silly install resolved     main: 'lib/canvas.js',
+26 silly install resolved     repository:
+26 silly install resolved      { type: 'git',
+26 silly install resolved        url: 'git://github.com/luismreis/node-openvg-canvas.git' },
+26 silly install resolved     keyword: [ 'raspberry-pi', 'openvg', 'canvas' ],
+26 silly install resolved     dependencies: { openvg: '~0.4.4' },
+26 silly install resolved     devDependencies: { tap: '*' },
+26 silly install resolved     license: 'MIT',
+26 silly install resolved     engines: { node: '>=0.8' },
+26 silly install resolved     scripts:
+26 silly install resolved      { test: 'node node_modules/tap/bin/tap.js tests',
+26 silly install resolved        install: 'node-gyp rebuild' },
+26 silly install resolved     gypfile: true,
+26 silly install resolved     readme: '# node-openvg-canvas\n\n[![NPM](https://nodei.co/npm/openvg-canvas.png?downloads=true&stars=true)](https://nodei.co/npm-dl/openvg-canvas/) [![NPM](https://nodei.co/npm-dl/openvg-canvas.png)](https://nodei.co/npm-dl/openvg-canvas/)\n\n## Canvas implementation on node-openvg\n\nThis module implements a HTML5 Canvas on top of OpenVG (node-openvg). It is targeted to the raspberry-pi.\nBy using the OpenVG APIs on the Raspberry PI, all graphics code will run on the GPU with hardware acceleration.\n\nThis library aims for API compatibility with [node-canvas](https://github.com/learnboost/node-canvas) where it applies and makes sense. While node-canvas is targeted to create images off screen, node-openvg-canvas is targeted to main screen usage, but not yet for user interaction.\n\nCurrently there are only plans to implement the 2d context. Implementing the 3d context (web gl) should be possible by mapping OpenGL/ES.\n\n## 0. Installation\n\nThis module has been tested on node 0.8, 0.10 and 0.11. Official node binaries for the\nraspberry pi can be found be clicking at "Other release files" link that accompanies every\nnode release announcement, [example](http://nodejs.org/dist/v0.11.4/).\n\n### Prerequisites\n\nnode-openvg-canvas depends on freetype and freeimage. To install these libraries\non the raspberry - assuming a raspbian distribution - use:\n\n    sudo apt-get install libfreetype6 libfreetype6-dev libfreeimage3 libfreeimage-dev\n\n### Source code install\n\nFetch the source:\n\n    git clone https://github.com/luismreis/node-openvg-canvas.git\n\nBuild the package:\n\n    cd node-openvg-canvas\n    npm install\n\nTo test:\n\n    export PATH=$PWD/bin:$PATH\n    examples/swissClock.js\n\n### NPM / module install\n\nRun on your command line:\n\n    npm install openvg-canvas --save\n\n## 1. Documentation\n\n### Reference\n\n* [WHATWG](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html)\n* [w3c](http://www.w3.org/TR/2dcontext/)\n\n### Canvas implementation status\n\nThe project now implements the full HTML 5 Canvas Level 1 specification, plus most of\nthe non interactive features of Level 2. The current focus on the project for releases in the short term is performance.\n\nItems marked as "✘" are not planned for implementation. Some due to insufficient information (eg. focus ring), others because they don\'t make sense in this implementation (eg. scrollPathIntoView).\n\n<table>\n  <thead>\n    <tr><th>Object / Feature</th><th>Status</th><th>Notes</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>CanvasRenderingContext2D</td><td></td><td></td></tr>\n    <tr><td>- state - save/restore</td><td>✔</td><td></td></tr>\n    <tr><td>- matrix transformations: scale, transform, etc</td><td>✔</td><td></td></tr>\n    <tr><td>- compositing - alpha, composite operation</td><td>✔</td><td></td></tr>\n    <tr><td>- image smoothing</td><td>✔</td><td></td></tr>\n    <tr><td>- stroke/fill style</td><td>✔</td><td></td></tr>\n    <tr><td>- solid colors</td><td>✔</td><td></td></tr>\n    <tr><td>- gradients</td><td>✔</td><td></td></tr>\n    <tr><td>- patterns</td><td>✔</td><td><br>(see below)</td></tr>\n    <tr><td>- shadows</td><td>✔</td><td></td></tr>\n    <tr><td>- clear/fill/stroke rect</td><td>✔</td><td></td></tr>\n    <tr><td>- beginPath, paths / path methods, fill, stroke</td><td>✔</td><td></td></tr>\n    <tr><td>- focus ring</td><td>✘</td><td></td></tr>\n    <tr><td>- scrollPathIntoView</td><td>✘</td><td></td></tr>\n    <tr><td>- clipping region</td><td>✔</td><td></td></tr>\n    <tr><td>- isPointInPath</td><td>to do</td><td>Support planned.</td></tr>\n    <tr><td>- fill/stroke text</td><td>✔</td><td></td></tr>\n    <tr><td>- measure text</td><td>✔</td><td>hanging and ideographic baselines not implemented.</td></tr>\n    <tr><td>- drawImage</td><td>✔</td><td></td></tr>\n    <tr><td>- hit regions</td><td>✘</td><td></td></tr>\n    <tr><td>- create/get/put image data</td><td>✔</td><td></td></tr>\n    <tr><td>CanvasDrawingStyles</td><td></td><td></td></tr>\n    <tr><td>- line caps/joins - line width, cap, join, miter limit</td><td>✔</td><td></td></tr>\n    <tr><td>- dashed lines</td><td>✔</td><td></td></tr>\n    <tr><td>- text - font, textAlign, textBaseline</td><td>✔</td><td></td></tr>\n    <tr><td>CanvasPathMethods</td><td>✔</td><td></td></tr>\n    <tr><td>- beginPath</td><td>✔</td><td>Also available on the Path object.</td></tr>\n    <tr><td>- moveTo, lineTo</td><td>✔</td><td></td></tr>\n    <tr><td>- quadraticCurveTo, bezierCurveTo</td><td>✔</td><td>Untested</td></tr>\n    <tr><td>- arcTo</td><td>✔</td><td>Implemented Canvas Level 2 (elliptical arcs)</td></tr>\n    <tr><td>- rect</td><td>✔</td><td></td></tr>\n    <tr><td>- arc</td><td>✔</td><td></td></tr>\n    <tr><td>- ellipse</td><td>✔</td><td></td></tr>\n    <tr><td>CanvasGradient</td><td>✔</td><td></td></tr>\n    <tr><td>- addColorStop</td><td>✔</td><td></td></tr>\n    <tr><td>CanvasPattern</td><td>✔</td><td>OpenVG doesn\'t support one-directional patterns. For now only \'no-repeat\' and \'repeat\' work as expected.</td></tr>\n    <tr><td>- setTransform</td><td>to do</td><td>Planned.</td></tr>\n    <tr><td>TextMetrics</td><td>✔</td><td></td></tr>\n    <tr><td>HitRegionOptions</td><td>✘</td><td></td></tr>\n    <tr><td>ImageData</td><td>✔</td><td></td></tr>\n    <tr><td>Path</td><td>✔</td><td>(see CanvasPathMethods)</td></tr>\n    <tr><td>- (constructor)</td><td>✔</td><td>SVG path constructor after v1.0</td></tr>\n    <tr><td>- addPath</td><td>✔</td><td></td></tr>\n    <tr><td>- addPathByStrokingPath</td><td>✘</td><td></td></tr>\n    <tr><td>- addText</td><td>✔</td><td>Position and Path variants</td></tr>\n    <tr><td>- addPathByStrokingText</td><td>✘</td><td></td></tr>\n  </tbody>\n</table>\n\n### Differences from the HTML5 Canvas object / node-canvas\n\nOn browsers, the Canvas rendering is controlled by the browser runtime - this is referred in the w3c docs as the \' "update the rendering" step\'.\n\nOn node-canvas, user code explicitly calls toBuffer or similar functions to produce output. Note that this behavior can be reproduced on node-openvg-canvas by calling ImageData.saveToBuffer and/or Canvas.toBuffer.\n\nCode running on node-openvg-canvas must explicitly swap display buffers, to do so, either call ```Canvas.vgSwapBuffers()``` or use the included requestAnimationFrame shim that does this after calling your paint callback function (for more information look at the clock examples).\n\n## Some sample screenshots\nThe code to produce these screenshots is included in the examples.\n\n### Colors parsing\nexamples/color.js\n\n![Color](https://raw.github.com/luismreis/node-openvg-canvas/master/examples/screenshots/color.png)\n\n### Clipping\nexamples/clipping.js\n\n![Clipping](https://raw.github.com/luismreis/node-openvg-canvas/master/examples/screenshots/clipping.png)\n\n### Alpha\nexamples/globalAlpha.js\n\n![globalAlpha](https://raw.github.com/luismreis/node-openvg-canvas/master/examples/screenshots/globalAlpha.png)\n\n### Shadows\nexamples/clipping.js\n\n![Shadows](https://raw.github.com/luismreis/node-openvg-canvas/master/examples/screenshots/shadows.png)\n\n### Text along paths\nexamples/pathText.js\n\n![Path Text](https://raw.github.com/luismreis/node-openvg-canvas/master/examples/screenshots/pathText.png)\n\n## License\n\n(The MIT License)\n\nCopyright (c) 2012, 2013 Luis Reis\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n====\n\nThis module used to depend on node-image (BSD license) [npm](https://npmjs.org/package/node-image) / [github](https://github.com/mikeseven/node-image) for image loading/saving, currently, it has it\'s own [FreeImage](http://freeimage.sourceforge.net/license.html) bindings.\n\n====\n\nFont loading and rendering via [FreeType](http://www.freetype.org/) is based on code originaly from [Hybrid Graphics, Ltd](http://web.archive.org/web/20070808195023/http://developer.hybrid.fi/font2openvg/index.html) (BSD license).\n',
+26 silly install resolved     readmeFilename: 'README.md',
+26 silly install resolved     bugs: { url: 'https://github.com/luismreis/node-openvg-canvas/issues' },
+26 silly install resolved     _id: 'openvg-canvas@1.1.7',
+26 silly install resolved     dist:
+26 silly install resolved      { shasum: 'b3636bece67ee652ced7d3180ecee9ab073f3922',
+26 silly install resolved        tarball: 'http://registry.npmjs.org/openvg-canvas/-/openvg-canvas-1.1.7.tgz' },
+26 silly install resolved     _from: 'openvg-canvas@*',
+26 silly install resolved     _npmVersion: '1.2.30',
+26 silly install resolved     _npmUser: { name: 'luismreis', email: 'luis.m.reis@gmail.com' },
+26 silly install resolved     maintainers: [ [Object] ],
+26 silly install resolved     directories: {},
+26 silly install resolved     _shasum: 'b3636bece67ee652ced7d3180ecee9ab073f3922',
+26 silly install resolved     _resolved: 'https://registry.npmjs.org/openvg-canvas/-/openvg-canvas-1.1.7.tgz',
+26 silly install resolved     homepage: 'https://github.com/luismreis/node-openvg-canvas' } ]
+27 info install openvg-canvas@1.1.7 into /usr/lib
+28 info installOne openvg-canvas@1.1.7
+29 verbose installOne of openvg-canvas to /usr/lib not in flight; installing
+30 verbose lock using /home/nazar/.npm/_locks/openvg-canvas-0b4a3f17d3c31eda.lock for /usr/lib/node_modules/openvg-canvas
+31 silly install write writing openvg-canvas 1.1.7 to /usr/lib/node_modules/openvg-canvas
+32 silly cache addNamed cb openvg-canvas@1.1.7
+33 verbose unbuild lib/node_modules/openvg-canvas
+34 verbose gentlyRm vacuuming /usr/lib/node_modules/openvg-canvas
+35 verbose tar unpack /home/nazar/.npm/openvg-canvas/1.1.7/package.tgz
+36 verbose tar unpacking to /usr/lib/node_modules/openvg-canvas
+37 verbose gentlyRm vacuuming /usr/lib/node_modules/openvg-canvas
+38 silly gunzTarPerm modes [ '755', '644' ]
+39 silly gunzTarPerm extractEntry package.json
+40 silly gunzTarPerm extractEntry .npmignore
+41 silly gunzTarPerm extractEntry README.md
+42 silly gunzTarPerm extractEntry binding.gyp
+43 silly gunzTarPerm extractEntry doc/canvas.idl
+44 silly gunzTarPerm extractEntry examples/arcTo.js
+45 silly gunzTarPerm extractEntry examples/glyphs.js
+46 silly gunzTarPerm extractEntry examples/gradients.js
+47 silly gunzTarPerm extractEntry examples/imageSource.js
+48 silly gunzTarPerm extractEntry examples/textSpeed.js
+49 silly gunzTarPerm extractEntry examples/globalAlpha.js
+50 silly gunzTarPerm extractEntry examples/clipImage.js
+51 silly gunzTarPerm extractEntry examples/pathObject.js
+52 silly gunzTarPerm extractEntry examples/pathPrimitives.js
+53 silly gunzTarPerm extractEntry examples/pathText.js
+54 silly gunzTarPerm extractEntry examples/patterns.js
+55 silly gunzTarPerm extractEntry examples/getImageData.js
+56 silly gunzTarPerm extractEntry examples/ray.js
+57 silly gunzTarPerm extractEntry examples/fonts.js
+58 silly gunzTarPerm extractEntry examples/textDrawing.js
+59 silly gunzTarPerm extractEntry examples/ellipse.js
+60 silly gunzTarPerm extractEntry examples/shadows.js
+61 silly gunzTarPerm extractEntry examples/drawImage.js
+62 silly gunzTarPerm extractEntry examples/shapes.js
+63 silly gunzTarPerm extractEntry examples/doubleBuffering.js
+64 silly gunzTarPerm extractEntry examples/spark.js
+65 silly gunzTarPerm extractEntry examples/color.js
+66 silly gunzTarPerm extractEntry examples/star.js
+67 silly gunzTarPerm extractEntry examples/clock.js
+68 silly gunzTarPerm extractEntry examples/state.js
+69 silly gunzTarPerm extractEntry examples/clippingState.js
+70 silly gunzTarPerm extractEntry examples/swissClock.js
+71 silly gunzTarPerm extractEntry examples/clipping.js
+72 silly gunzTarPerm extractEntry examples/textAlign.js
+73 silly gunzTarPerm extractEntry examples/lineDashOffset.js
+74 silly gunzTarPerm extractEntry examples/util.js
+75 silly gunzTarPerm extractEntry examples/lineDashState.js
+76 silly gunzTarPerm extractEntry examples/screenshots/imageSource_00.png
+77 silly gunzTarPerm extractEntry examples/screenshots/clipImage.png
+78 silly gunzTarPerm extractEntry examples/screenshots/clippingState.png
+79 silly gunzTarPerm extractEntry examples/screenshots/color.png
+80 silly gunzTarPerm extractEntry examples/screenshots/drawImage.png
+81 silly gunzTarPerm extractEntry examples/screenshots/globalAlpha.png
+82 silly gunzTarPerm extractEntry examples/screenshots/clipping.png
+83 silly gunzTarPerm extractEntry examples/screenshots/imageSource_01.png
+84 silly gunzTarPerm extractEntry examples/screenshots/imageSource_final.png
+85 silly gunzTarPerm extractEntry examples/screenshots/lineDashOffset.png
+86 silly gunzTarPerm extractEntry examples/screenshots/lineDashState.png
+87 silly gunzTarPerm extractEntry examples/screenshots/pathText.png
+88 silly gunzTarPerm extractEntry examples/screenshots/shadows.png
+89 silly gunzTarPerm extractEntry examples/images/flurry.jpeg
+90 silly gunzTarPerm extractEntry examples/images/grid.gif
+91 silly gunzTarPerm extractEntry examples/images/grid.jpeg
+92 silly gunzTarPerm extractEntry examples/images/grid.png
+93 silly gunzTarPerm extractEntry examples/images/grid.pxm
+94 silly gunzTarPerm extractEntry examples/images/grido2.png
+95 silly gunzTarPerm extractEntry examples/images/grido4.png
+96 silly gunzTarPerm extractEntry examples/images/noisy_grid.png
+97 silly gunzTarPerm extractEntry v8.log
+98 silly gunzTarPerm extractEntry bin/node-canvas
+99 silly gunzTarPerm extractEntry reference/arcTo.html
+100 silly gunzTarPerm extractEntry reference/clipping.html
+101 silly gunzTarPerm extractEntry reference/clippingState.html
+102 silly gunzTarPerm extractEntry reference/ellipse.html
+103 silly gunzTarPerm extractEntry reference/images/grido2.png
+104 silly gunzTarPerm extractEntry reference/images/grido4.png
+105 silly gunzTarPerm extractEntry reference/javascripts/arcTo.js
+106 silly gunzTarPerm extractEntry reference/javascripts/requestAnimationFrame.js
+107 silly gunzTarPerm extractEntry reference/lineDash.html
+108 silly gunzTarPerm extractEntry reference/patterns.html
+109 silly gunzTarPerm extractEntry reference/shadows.html
+110 silly gunzTarPerm extractEntry reference/stylesheets/style.css
+111 silly gunzTarPerm extractEntry sandbox.sh
+112 silly gunzTarPerm extractEntry src/freeimage/freeimage.cc
+113 silly gunzTarPerm extractEntry src/freeimage/freeimage.h
+114 silly gunzTarPerm extractEntry src/freeimage/image.cc
+115 silly gunzTarPerm extractEntry src/freeimage/image.h
+116 silly gunzTarPerm extractEntry src/freetype.cc
+117 silly gunzTarPerm extractEntry src/freetype.h
+118 silly gunzTarPerm extractEntry src/util.cc
+119 silly gunzTarPerm extractEntry src/util.h
+120 silly gunzTarPerm extractEntry src/v8_helpers.h
+121 silly gunzTarPerm extractEntry tests/color.js
+122 silly gunzTarPerm extractEntry tests/image/convert-from-rgba-bits.js
+123 silly gunzTarPerm extractEntry tests/image/load-from-buffer.js
+124 silly gunzTarPerm extractEntry lib/canvas.js
+125 silly gunzTarPerm extractEntry lib/color.js
+126 silly gunzTarPerm extractEntry lib/context.js
+127 silly gunzTarPerm extractEntry lib/drawingStyle.js
+128 silly gunzTarPerm extractEntry lib/gradient.js
+129 silly gunzTarPerm extractEntry lib/image.js
+130 silly gunzTarPerm extractEntry lib/matrix.js
+131 silly gunzTarPerm extractEntry lib/path.js
+132 silly gunzTarPerm extractEntry lib/pattern.js
+133 silly gunzTarPerm extractEntry lib/text/freetype.js
+134 silly gunzTarPerm extractEntry lib/text/loading.js
+135 silly gunzTarPerm extractEntry lib/text/rendering.js
+136 silly gunzTarPerm extractEntry lib/text/text.js
+137 info preinstall openvg-canvas@1.1.7
+138 silly prepareForInstallMany adding openvg@~0.4.4 from openvg-canvas dependencies
+139 silly cache add args [ 'openvg@~0.4.4', null ]
+140 verbose cache add spec openvg@~0.4.4
+141 silly cache add parsed spec { raw: 'openvg@~0.4.4',
+141 silly cache add   scope: null,
+141 silly cache add   name: 'openvg',
+141 silly cache add   rawSpec: '~0.4.4',
+141 silly cache add   spec: '>=0.4.4 <0.5.0',
+141 silly cache add   type: 'range' }
+142 verbose addNamed openvg@>=0.4.4 <0.5.0
+143 silly addNamed semver.valid null
+144 silly addNamed semver.validRange >=0.4.4 <0.5.0
+145 silly addNameRange { name: 'openvg', range: '>=0.4.4 <0.5.0', hasData: false }
+146 silly mapToRegistry name openvg
+147 silly mapToRegistry using default registry
+148 silly mapToRegistry registry https://registry.npmjs.org/
+149 silly mapToRegistry uri https://registry.npmjs.org/openvg
+150 verbose addNameRange registry:https://registry.npmjs.org/openvg not in flight; fetching
+151 verbose request uri https://registry.npmjs.org/openvg
+152 verbose request no auth needed
+153 info attempt registry request try #1 at 16:50:05
+154 verbose request id fa6137400605605b
+155 http request GET https://registry.npmjs.org/openvg
+156 http 200 https://registry.npmjs.org/openvg
+157 silly get cb [ 200,
+157 silly get   { date: 'Mon, 09 Feb 2015 14:50:06 GMT',
+157 silly get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+157 silly get     etag: '"ESUTF6A81JD6NZC44AU3EB9FM"',
+157 silly get     'content-type': 'application/json',
+157 silly get     'cache-control': 'max-age=60',
+157 silly get     'content-length': '32399',
+157 silly get     'accept-ranges': 'bytes',
+157 silly get     via: '1.1 varnish',
+157 silly get     age: '0',
+157 silly get     'x-served-by': 'cache-fra1243-FRA',
+157 silly get     'x-cache': 'MISS',
+157 silly get     'x-cache-hits': '0',
+157 silly get     'x-timer': 'S1423493405.629115,VS0,VE372',
+157 silly get     vary: 'Accept',
+157 silly get     'keep-alive': 'timeout=10, max=50',
+157 silly get     connection: 'Keep-Alive' } ]
+158 verbose get saving openvg to /home/nazar/.npm/registry.npmjs.org/openvg/.cache.json
+159 silly addNameRange number 2 { name: 'openvg', range: '>=0.4.4 <0.5.0', hasData: true }
+160 silly addNameRange versions [ 'openvg',
+160 silly addNameRange   [ '0.1.0',
+160 silly addNameRange     '0.1.1',
+160 silly addNameRange     '0.2.0',
+160 silly addNameRange     '0.3.0',
+160 silly addNameRange     '0.4.0',
+160 silly addNameRange     '0.4.1',
+160 silly addNameRange     '0.4.2',
+160 silly addNameRange     '0.4.3',
+160 silly addNameRange     '0.4.4' ] ]
+161 verbose addNamed openvg@0.4.4
+162 silly addNamed semver.valid 0.4.4
+163 silly addNamed semver.validRange 0.4.4
+164 silly mapToRegistry name openvg
+165 silly mapToRegistry using default registry
+166 silly mapToRegistry registry https://registry.npmjs.org/
+167 silly mapToRegistry uri https://registry.npmjs.org/openvg
+168 verbose addRemoteTarball https://registry.npmjs.org/openvg/-/openvg-0.4.4.tgz not in flight; adding
+169 verbose addRemoteTarball [ 'https://registry.npmjs.org/openvg/-/openvg-0.4.4.tgz',
+169 verbose addRemoteTarball   '73fdba9fa4e7653d35d13b2c811f42b15257ad69' ]
+170 info retry fetch attempt 1 at 16:50:05
+171 info attempt registry request try #1 at 16:50:05
+172 http fetch GET https://registry.npmjs.org/openvg/-/openvg-0.4.4.tgz
+173 http fetch 200 https://registry.npmjs.org/openvg/-/openvg-0.4.4.tgz
+174 silly fetchAndShaCheck shasum 73fdba9fa4e7653d35d13b2c811f42b15257ad69
+175 verbose addTmpTarball /tmp/npm-4675-17a86dad/registry.npmjs.org/openvg/-/openvg-0.4.4.tgz not in flight; adding
+176 verbose addTmpTarball already have metadata; skipping unpack for openvg@0.4.4
+177 silly cache afterAdd openvg@0.4.4
+178 verbose afterAdd /home/nazar/.npm/openvg/0.4.4/package/package.json not in flight; writing
+179 verbose afterAdd /home/nazar/.npm/openvg/0.4.4/package/package.json written
+180 silly install resolved [ { name: 'openvg',
+180 silly install resolved     preferGlobal: 'true',
+180 silly install resolved     version: '0.4.4',
+180 silly install resolved     author:
+180 silly install resolved      { name: 'Luis Reis',
+180 silly install resolved        email: 'luis@luismreis.com',
+180 silly install resolved        url: 'http://luismreis.com/' },
+180 silly install resolved     description: 'OpenVG bindings for node',
+180 silly install resolved     bin: { 'node-openvg': './bin/node-openvg' },
+180 silly install resolved     main: 'openvg.js',
+180 silly install resolved     repository:
+180 silly install resolved      { type: 'git',
+180 silly install resolved        url: 'git://github.com/luismreis/node-openvg.git' },
+180 silly install resolved     keyword: [ 'raspberry-pi', 'openvg' ],
+180 silly install resolved     dependencies: {},
+180 silly install resolved     devDependencies: {},
+180 silly install resolved     license: 'MIT',
+180 silly install resolved     engines: { node: '>=0.8' },
+180 silly install resolved     scripts: { install: 'node-gyp rebuild' },
+180 silly install resolved     gypfile: true,
+180 silly install resolved     readme: '# node-openvg (OpenVG bindings for node.js)\n\n[![NPM](https://nodei.co/npm/openvg.png?downloads=true&stars=true)](https://nodei.co/npm-dl/openvg/) [![NPM](https://nodei.co/npm-dl/openvg.png)](https://nodei.co/npm-dl/openvg/)\n\nThis module implements bindings for OpenVG. It is targeted to the raspberry-pi.\n\nIt is heavily inspired in [node-sdl](https://github.com/creationix/node-sdl) and [openvg](https://github.com/ajstarks/openvg).\n\nTested on node 0.8, 0.10 and 0.11.\n\n## 0. Installation\n\nJust install via npm:\n\n    npm install openvg\n\n## 1. Usage\n\nThis library makes a 1:1 mapping between OpenVG 1.1 (as currently bundled on raspian) and JS (via node.js/v8 bindings).\n\n### Differences from the OpenVG APIs.\n\nAll array based APIs are implemented via JS typed arrays. As such, length and offsets are supposed to be handled by the typed array API.\n\nDue to exceptional slowness of typed array creation (should be avoided at all costs either in node and in browser code), even when using [subarray](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays/Int8Array), the APIs that receive typed arrays as parameters (setXxxFV, setXxxIV, etc.) also present OL (Offset + Length) or O (Offset) variants.\n\n### Commonalities with the OpenVG APIs.\n\nCurrently, handles to OpenVG resources aren\'t wrapped in JS/C++ objects.\nFor this reason, special care must be taken to ensure propper destruction of these\nobjects, as they wont be reclaimed by the garbage collector.\nThis may be seen as a bonus since this explicit resource management may help improve\nperformance, esp. in the scenario where this library is supposed to be used.\n\nPS: There are plans to support this kind of wrapping in the future.\n\n### Examples\n\nThis library was created as a base for [openvg-canvas](https://github.com/luismreis/node-openvg-canvas), but can be used standalone.\n\nAlso, check the [examples directory](https://github.com/luismreis/node-openvg/tree/master/examples).\n\n## License\n\n(The MIT License)\n\nCopyright (c) 2012, 2013 Luis Reis\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n',
+180 silly install resolved     readmeFilename: 'README.md',
+180 silly install resolved     bugs: { url: 'https://github.com/luismreis/node-openvg/issues' },
+180 silly install resolved     _id: 'openvg@0.4.4',
+180 silly install resolved     dist:
+180 silly install resolved      { shasum: '73fdba9fa4e7653d35d13b2c811f42b15257ad69',
+180 silly install resolved        tarball: 'http://registry.npmjs.org/openvg/-/openvg-0.4.4.tgz' },
+180 silly install resolved     _from: 'openvg@>=0.4.4 <0.5.0',
+180 silly install resolved     _npmVersion: '1.2.30',
+180 silly install resolved     _npmUser: { name: 'luismreis', email: 'luis.m.reis@gmail.com' },
+180 silly install resolved     maintainers: [ [Object] ],
+180 silly install resolved     directories: {},
+180 silly install resolved     _shasum: '73fdba9fa4e7653d35d13b2c811f42b15257ad69',
+180 silly install resolved     _resolved: 'https://registry.npmjs.org/openvg/-/openvg-0.4.4.tgz' } ]
+181 info install openvg@0.4.4 into /usr/lib/node_modules/openvg-canvas
+182 info installOne openvg@0.4.4
+183 verbose installOne of openvg to /usr/lib/node_modules/openvg-canvas not in flight; installing
+184 verbose lock using /home/nazar/.npm/_locks/openvg-257862e2940148e9.lock for /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+185 silly install write writing openvg 0.4.4 to /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+186 silly cache addNamed cb openvg@0.4.4
+187 verbose unbuild lib/node_modules/openvg-canvas/node_modules/openvg
+188 verbose gentlyRm vacuuming /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+189 verbose tar unpack /home/nazar/.npm/openvg/0.4.4/package.tgz
+190 verbose tar unpacking to /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+191 verbose gentlyRm vacuuming /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+192 silly gunzTarPerm modes [ '755', '644' ]
+193 silly gunzTarPerm extractEntry package.json
+194 silly gunzTarPerm extractEntry .npmignore
+195 silly gunzTarPerm extractEntry README.md
+196 silly gunzTarPerm extractEntry openvg.js
+197 silly gunzTarPerm extractEntry bin/node-openvg
+198 silly gunzTarPerm extractEntry binding.gyp
+199 silly gunzTarPerm extractEntry examples/hello.js
+200 silly gunzTarPerm extractEntry examples/hwinfo.js
+201 silly gunzTarPerm extractEntry examples/panic.js
+202 silly gunzTarPerm extractEntry examples/star.js
+203 silly gunzTarPerm extractEntry examples/fonts/sans-mono.json
+204 silly gunzTarPerm extractEntry examples/fonts/sans.json
+205 silly gunzTarPerm extractEntry examples/fonts/serif.json
+206 silly gunzTarPerm extractEntry examples/modules/text.js
+207 silly gunzTarPerm extractEntry examples/modules/util.js
+208 silly gunzTarPerm extractEntry src/argchecks.h
+209 silly gunzTarPerm extractEntry src/egl.cc
+210 silly gunzTarPerm extractEntry src/egl.h
+211 silly gunzTarPerm extractEntry src/init-egl.cc
+212 silly gunzTarPerm extractEntry src/openvg.cc
+213 silly gunzTarPerm extractEntry src/openvg.h
+214 silly gunzTarPerm extractEntry src/v8_helpers.h
+215 info preinstall openvg@0.4.4
+216 silly install resolved []
+217 verbose about to build /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+218 info build /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+219 verbose linkStuff [ true,
+219 verbose linkStuff   '/usr/lib/node_modules',
+219 verbose linkStuff   false,
+219 verbose linkStuff   '/usr/lib/node_modules/openvg-canvas/node_modules' ]
+220 info linkStuff openvg@0.4.4
+221 verbose linkBins openvg@0.4.4
+222 verbose link bins [ { 'node-openvg': './bin/node-openvg' },
+222 verbose link bins   '/usr/lib/node_modules/openvg-canvas/node_modules/.bin',
+222 verbose link bins   false ]
+223 verbose linkMans openvg@0.4.4
+224 verbose rebuildBundles openvg@0.4.4
+225 verbose gentlyRm vacuuming /usr/lib/node_modules/openvg-canvas/node_modules/.bin/node-openvg
+226 info install openvg@0.4.4
+227 verbose unsafe-perm in lifecycle false
+228 info openvg@0.4.4 Failed to exec install script
+229 verbose unlock done using /home/nazar/.npm/_locks/openvg-257862e2940148e9.lock for /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+230 verbose about to build /usr/lib/node_modules/openvg-canvas
+231 verbose unlock done using /home/nazar/.npm/_locks/openvg-canvas-0b4a3f17d3c31eda.lock for /usr/lib/node_modules/openvg-canvas
+232 verbose stack Error: openvg@0.4.4 install: `node-gyp rebuild`
+232 verbose stack Exit status 1
+232 verbose stack     at EventEmitter.<anonymous> (/usr/lib/node_modules/npm/lib/utils/lifecycle.js:213:16)
+232 verbose stack     at EventEmitter.emit (events.js:98:17)
+232 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:14:12)
+232 verbose stack     at ChildProcess.emit (events.js:98:17)
+232 verbose stack     at maybeClose (child_process.js:766:16)
+232 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:833:5)
+233 verbose pkgid openvg@0.4.4
+234 verbose cwd /home/nazar/jss/node
+235 error Linux 3.13.0-45-generic
+236 error argv "node" "/usr/bin/npm" "install" "-g" "openvg-canvas" "--save"
+237 error node v0.10.36
+238 error npm  v2.5.0
+239 error code ELIFECYCLE
+240 error openvg@0.4.4 install: `node-gyp rebuild`
+240 error Exit status 1
+241 error Failed at the openvg@0.4.4 install script 'node-gyp rebuild'.
+241 error This is most likely a problem with the openvg package,
+241 error not with npm itself.
+241 error Tell the author that this fails on your system:
+241 error     node-gyp rebuild
+241 error You can get their info via:
+241 error     npm owner ls openvg
+241 error There is likely additional logging output above.
+242 verbose exit [ 1, true ]
+243 verbose unbuild lib/node_modules/openvg-canvas/node_modules/openvg
+244 info preuninstall openvg@0.4.4
+245 info uninstall openvg@0.4.4
+246 verbose unbuild rmStuff openvg@0.4.4 from /usr/lib/node_modules
+247 verbose unbuild rmStuff in /usr/lib/node_modules/openvg-canvas/node_modules
+248 verbose gentlyRm verifying that /usr is managed by npm
+249 silly isManaged /usr is not inside /usr/lib/node_modules
+250 silly isManaged /usr is not inside /usr/lib/node_modules
+251 silly isManaged /usr/bin is inside /usr
+252 silly gentlyRm /usr is managed by npm
+253 silly gentlyRm /usr/lib/node_modules/openvg-canvas/node_modules/.bin/node-openvg is under /usr
+254 verbose gentlyRm vacuuming /usr/lib/node_modules/openvg-canvas/node_modules/.bin/node-openvg up to /usr
+255 silly gentlyRm removing /usr/lib/node_modules/openvg-canvas/node_modules/.bin/node-openvg
+256 silly gentlyRm removing /usr/lib/node_modules/openvg-canvas/node_modules/.bin
+257 silly gentlyRm quitting because other entries in /usr/lib/node_modules/openvg-canvas/node_modules
+258 info postuninstall openvg@0.4.4
+259 verbose gentlyRm vacuuming /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+260 silly gentlyRm purging /usr/lib/node_modules/openvg-canvas/node_modules/openvg
+261 silly gentlyRm removing /usr/lib/node_modules/openvg-canvas/node_modules
+262 silly gentlyRm quitting because other entries in /usr/lib/node_modules/openvg-canvas
+263 verbose unbuild lib/node_modules/openvg-canvas
+264 info preuninstall openvg-canvas@1.1.7
+265 info uninstall openvg-canvas@1.1.7
+266 verbose unbuild rmStuff openvg-canvas@1.1.7 from /usr/lib/node_modules
+267 verbose gentlyRm verifying that /usr is managed by npm
+268 silly isManaged /usr is not inside /usr/lib/node_modules
+269 silly isManaged /usr is not inside /usr/lib/node_modules
+270 silly isManaged /usr is not inside /usr/bin
+271 silly isManaged /usr is inside /usr
+272 silly gentlyRm /usr is managed by npm
+273 silly gentlyRm /usr/bin/node-canvas is under /usr
+274 verbose gentlyRm vacuuming /usr/bin/node-canvas up to /usr
+275 info postuninstall openvg-canvas@1.1.7
+276 verbose gentlyRm vacuuming /usr/lib/node_modules/openvg-canvas
+277 silly gentlyRm purging /usr/lib/node_modules/openvg-canvas
+278 silly gentlyRm quitting because other entries in /usr/lib/node_modules
