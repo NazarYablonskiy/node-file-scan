@@ -22,21 +22,29 @@ var readDir = function(path) {
     files.forEach(function(file) {
         getFileInfo(path + '/' + file);
     });
+    return files;
 }
 
-var sortBySize = function() {
-    fileStorage.sort(function(a, b) {
+var sortBySize = function(files) {
+    files.sort(function(a, b) {
         return a.size - b.size;
     });
+    return files;
 }
 
-var groupBySize = function() {
-    fileStorage.push({
+// var sortByData = function(files) {
+// 	files.sort(function(a, b){
+// 		return a.buffer - b.buffer;
+// 	});
+// }
+
+var groupBySize = function(files) {
+    files.push({
         size: 0
     }); //страховка =)
     var groupedFiles = [];
     var buff = [];
-    fileStorage.forEach(function(file) {
+    files.forEach(function(file) {
         if (buff.length == 0) {
             buff.push(file);
         } else if (buff[buff.length - 1].size == file.size) {
@@ -50,26 +58,19 @@ var groupBySize = function() {
             buff.push(file);
         }
     });
-    fileStorage = groupedFiles;
+    return groupedFiles;
 }
 
-var checkFileGroups = function() {
+var checkFileGroups = function(filesArr) {
     var comparedFiles = [];
-    fileStorage.forEach(function(files) { //file is big if file size > 1024 Bytes
-        if (files[0].size <= 1024) {
+    filesArr.forEach(function(files) { //file is big if file size > 1024 Bytes
+        if (files[0].size <= 10240) {
             comparedFiles[comparedFiles.length] = compareFiles(files);
         } else {
             // comparedFiles[comparedFiles.length] = compareBigFiles(files) || undefined;
         }
     });
-    fileStorage = comparedFiles;
-}
-
-var compareFiles = function(files) {
-    var readedFiles = readFiles(files);
-    var comparedFiles = compareByBuffers(readedFiles);
-    var filenames = getNames(comparedFiles);
-    return filenames;
+    return comparedFiles;
 }
 
 // var compareBigFiles = function(files) {
@@ -89,21 +90,29 @@ var compareFiles = function(files) {
 //     return true;
 // }
 
+var compareFiles = function(files) {
+    var readedFiles = readFiles(files);
+    var comparedFiles = compareByBuffers(readedFiles);
+    var filenames = getNames(comparedFiles);
+    return filenames;
+}
+
 var readFiles = function(files) {
     for (var file in files) {
-        files[file].buffer = fs.readFileSync(files[file].name);
+        files[file].buffer = fs.readFileSync(files[file].name).toString();
     };
     return files;
 }
 
 var compareByBuffers = function(files) {
 	files.push({buffer: 0})
+	files.sort();
     var comparedFiles = [];
     var buff = [];
     files.forEach(function(file) {
         if (buff.length == 0) {
             buff.push(file);
-        } else if (buff[buff.length - 1].buffer.toString() == file.buffer.toString()) {
+        } else if (buff[buff.length - 1].buffer == file.buffer) {
             buff.push(file);
         } else if (buff.length >= 2) {
             comparedFiles.push(buff);
@@ -131,10 +140,28 @@ var getNames = function(filesArrs) {  //gets 2x array
 
 var main = function() { // runing	
     var path = __dirname + '/files';
-    // var path = '/home/nazar/Apps';
+    // var path = '/home/nazar';
     readDir(path);
-    sortBySize();
-    groupBySize();
-    checkFileGroups();
+    fileStorage = sortBySize(fileStorage);
+    fileStorage = groupBySize(fileStorage);
+    fileStorage = checkFileGroups(fileStorage);
     console.log(fileStorage);
 }();
+
+// TODO sort buffered files
+
+// var main = function() { // runing	
+//     // var path = __dirname + '/files';
+//     var path = '/home/nazar/Apps';
+//     fileStorage = readDir(path);
+//     console.log('############## readDiir');
+//     console.log(fileStorage);
+//     fileStorage = sortBySize(fileStorage);
+//     console.log('############## sortBy size');
+//     console.log(fileStorage);
+//     fileStorage = groupBySize(fileStorage);
+//     console.log('############## group');
+//     console.log(fileStorage);
+//     fileStorage = checkFileGroups(fileStorage);
+//     console.log(fileStorage);
+// }();
