@@ -33,12 +33,6 @@ var sortBySize = function(files) {
     return files;
 }
 
-var sortByData = function(files) { //odn`t working right
-    files.sort(function(a, b) {
-        return a.buffer - b.buffer;
-    });
-}
-
 var groupBySize = function(files) {
     files.push({
         size: 0
@@ -110,12 +104,10 @@ var compareBigFilesFunc = function(file_1, file_2) {
                 break;
             }
         }
-        if(result) result = compareBigFilesIteration(stream1, stream2, file_1.size - BUFFER_SIZE);
+        if (result) result = compareBigFilesIteration(stream1, stream2, file_1.size - BUFFER_SIZE);
     } catch (err) {
-
+        //ignor fs errs
     }
-
-    //read buffers from stream and compare it for equality in loop
     return result;
 }
 
@@ -137,7 +129,6 @@ var compareByBuffers = function(files, compareFunc) {
     files.push({
         buffer: 0
     })
-    sortByData(files);
     files.filter(function() {
         return true;
     });
