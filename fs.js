@@ -2,27 +2,30 @@ var fs = require('fs');
 var fileStorage = [];
 
 var getFileInfo = function(filename) {
+	var file;
     try {
         var stats = fs.statSync(filename);
         if (stats.isDirectory()) {
             readDir(filename);
         } else if (stats.isFile() && !!stats.size) {
-            fileStorage.push({
+            file = {
                 "name": filename,
                 "size": stats.size
-            });
+            };
         }
     } catch (err) {
         //ignor all fs errs
     }
+    return file;
 }
 
 var readDir = function(path) {
     var files = fs.readdirSync(path);
     files.forEach(function(file) {
-        getFileInfo(path + '/' + file);
+        file = getFileInfo(path + '/' + file);
     });
     return files;
+    console.log(files);
 }
 
 var sortBySize = function(files) {
@@ -32,11 +35,11 @@ var sortBySize = function(files) {
     return files;
 }
 
-// var sortByData = function(files) {
-// 	files.sort(function(a, b){
-// 		return a.buffer - b.buffer;
-// 	});
-// }
+var sortByData = function(files) { //odn`t working right
+	files.sort(function(a, b){
+		return a.buffer - b.buffer;
+	});
+}
 
 var groupBySize = function(files) {
     files.push({
@@ -106,7 +109,7 @@ var readFiles = function(files) {
 
 var compareByBuffers = function(files) {
 	files.push({buffer: 0})
-	files.sort();
+	sortByData(files);
     var comparedFiles = [];
     var buff = [];
     files.forEach(function(file) {
@@ -138,7 +141,7 @@ var getNames = function(filesArrs) {  //gets 2x array
     return filenames;
 }
 
-var main = function() { // runing	
+var main = function() { 	
     var path = __dirname + '/files';
     // var path = '/home/nazar';
     readDir(path);
@@ -147,21 +150,3 @@ var main = function() { // runing
     fileStorage = checkFileGroups(fileStorage);
     console.log(fileStorage);
 }();
-
-// TODO sort buffered files
-
-// var main = function() { // runing	
-//     // var path = __dirname + '/files';
-//     var path = '/home/nazar/Apps';
-//     fileStorage = readDir(path);
-//     console.log('############## readDiir');
-//     console.log(fileStorage);
-//     fileStorage = sortBySize(fileStorage);
-//     console.log('############## sortBy size');
-//     console.log(fileStorage);
-//     fileStorage = groupBySize(fileStorage);
-//     console.log('############## group');
-//     console.log(fileStorage);
-//     fileStorage = checkFileGroups(fileStorage);
-//     console.log(fileStorage);
-// }();
