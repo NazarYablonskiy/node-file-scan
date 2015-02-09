@@ -1,6 +1,4 @@
 var arr = [{'name': 'abc'}, {'name': 'adc'}, {'name': 'axf'}, {'name': 'aaa'}];
-console.log('unsorted');
-console.log(arr);
-arr.sort();
-console.log('sorted');
+console.log(arr.splice({'name': 'abc'}));
+console.log('###################');
 console.log(arr);
